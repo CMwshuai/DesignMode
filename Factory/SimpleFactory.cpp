@@ -1,19 +1,19 @@
-#include "Factory.h"
+#include "SimpleFactory.h"
 #include "Product.h"
 #include <iostream>
 
-CFactory::CFactory()
+CSimpleFactory::CSimpleFactory()
 {
-    std::cout << "create CFactory!" << std::endl;
+    std::cout << "create CSimpleFactory!" << std::endl;
 }
 
-CFactory::~CFactory()
+CSimpleFactory::~CSimpleFactory()
 {
-    std::cout << "destory CFactory!" << std::endl;
+    std::cout << "destory CSimpleFactory!" << std::endl;
 }
 
 /*根据传入的类型来决定生产什么产品*/
-CProduct* CFactory::concreateProduct(int iProduct)
+CProduct* CSimpleFactory::concreateProduct(int iProduct)
 {
     CProduct *pProduct = nullptr;
     switch(iProduct)

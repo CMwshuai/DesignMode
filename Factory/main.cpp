@@ -1,15 +1,15 @@
 
 /*模板方法宏*/
-//#define _FACTORY_MODE_
+#define _FACTORY_METHOD_
 
 /*简单工厂宏*/
 //#define _FACTORY_SIMPLE_
 
 /*抽象工厂宏*/
-#define _FACTORY_ABSTROCT_
+//#define _FACTORY_ABSTROCT_
 
-#if defined(_FACTORY_MODE_) || defined(_FACTORY_SIMPLE_)
-#include "Factory.h"
+#if defined(_FACTORY_METHOD_) || defined(_FACTORY_SIMPLE_)
+#include "SimpleFactory.h"
 #include "FactoryMothed.h"
 #include "Product.h"
 #elif defined(_FACTORY_ABSTROCT_)
@@ -22,18 +22,26 @@
 
 int main()
 {
-#if defined(_FACTORY_MODE_)/*工厂方法*/
+#if defined(_FACTORY_METHOD_)/*工厂方法*/
     /*创建工厂A*/
     CFactoryMothed* pFactoryMothedA = new CFactoryMothedA();
 
     /*使用工厂A创建产品A*/
     CProduct* pProductA = pFactoryMothedA->concreateProduct();
 
-    delete pProductA;
-    pProductA = nullptr;
+    /*释放产品A资源*/
+    if (nullptr != pProductA)
+    {
+        delete pProductA;
+        pProductA = nullptr;
+    }
 
-    delete pFactoryMothedA;
-    pFactoryMothedA = nullptr;
+    /*释放工厂A资源*/
+    if (nullptr != pFactoryMothedA)
+    {
+        delete pFactoryMothedA;
+        pFactoryMothedA = nullptr;
+    }
 
     /*创建工厂B*/
     CFactoryMothed* pFactoryMothedB = new CFactoryMothedB();
@@ -41,33 +49,49 @@ int main()
     /*创建产品B*/
     CProduct* pProductB = pFactoryMothedB->concreateProduct();
 
-    delete pProductB;
-    pProductB = nullptr;
+    /*释放产品B资源*/
+    if (nullptr != pProductB)
+    {
+        delete pProductB;
+        pProductB = nullptr;
+    }
 
-    delete pFactoryMothedB;
-    pFactoryMothedB = nullptr;
+    /*释放工厂B资源*/
+    if (nullptr != pFactoryMothedB)
+    {
+        delete pFactoryMothedB;
+        pFactoryMothedB = nullptr;
+    }
 
 #elif defined(_FACTORY_SIMPLE_) /*简单工厂*/
 
     /*创建工厂*/
-    CFactory *pFactory = new CFactory();
+    CSimpleFactory *pSimpleFactory = new CSimpleFactory();
     /*创建产品A*/
-    CProduct *pProduct = pFactory->concreateProduct(1);
+    CProduct *pProduct = pSimpleFactory->concreateProduct(1);
+    
+    /*释放产品A资源*/
     if (nullptr != pProduct)
     {
         delete pProduct;
         pProduct = nullptr;
     }
+    
     /*创建产品B*/
-    pProduct = pFactory->concreateProduct(2);
+    pProduct = pSimpleFactory->concreateProduct(2);
+    /*释放产品B资源*/
     if (nullptr != pProduct)
     {
         delete pProduct;
         pProduct = nullptr;
     }
 
-    delete pFactory;
-    pFactory = nullptr;
+    /*释放简单工厂资源*/
+    if (nullptr != pSimpleFactory)
+    {
+        delete pSimpleFactory;
+        pSimpleFactory = nullptr;
+    }
 
 #elif defined(_FACTORY_ABSTROCT_)/*抽象工厂*/
 /*创建工厂A*/
