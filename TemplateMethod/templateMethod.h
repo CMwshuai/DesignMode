@@ -8,10 +8,10 @@ public:
     virtual ~CWork();
 
     /*在宿舍起床*/
-    void weakUp();
+    virtual void weakUp() final;
     
     /*吃饭*/
-    void eat();
+    virtual void eat() final;
 
     /*步骤3需要根据具体的环境作出不同的操作*/
     virtual void goWork() = 0;
